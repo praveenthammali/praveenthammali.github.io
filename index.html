@@ -5,6 +5,23 @@
 <title>Google Maps JavaScript API v3 Example: Geocoding Simple</title>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
+
+(function(url, callback) {
+    jQuery.ajax({
+        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
+        dataType: 'json',
+        success: function(data) {
+            callback(data.responseData.feed);
+        }
+    });
+})('http://news.hitb.org/rss.xml', function(feed){ // Change to desired URL
+    var entries = feed.entries, feedList = '';
+    for (var i = 0; i < entries.length; i++) {
+        feedList +='<li><a href="' + entries[i].link + '">' + entries[i].title + '</a></li>';
+    }
+    jQuery('.feed > ul').append(feedList);
+});
+
   
   function initialize() {
     var geocoder;
@@ -55,6 +72,10 @@
 </script>
 </head>
 <body style="margin:0px; padding:0px;" >
+  <div class="feed">
+        <h4>Hacker News</h4>
+        <ul></ul>
+</div>
   Search:<input type="name" name="city" id="city" onchange="initialize();">
   
  <div id="map_canvas" style="width:100%; height:100%">
