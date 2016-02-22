@@ -15,7 +15,9 @@
             callback(data.responseData.feed);
         }
     });
-})('http://news.hitb.org/rss.xml', function(feed){ // Change to desired URL
+})('http://thathappened.in/feed/', function(feed){ // Change to desired URL
+
+//http://news.hitb.org/rss.xml
     var entries = feed.entries, feedList = '';
     for (var i = 0; i < entries.length; i++) {
         feedList +='<li><a href="' + entries[i].link + '">' + entries[i].title + '</a></li>';
